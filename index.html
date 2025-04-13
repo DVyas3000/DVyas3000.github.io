@@ -14,7 +14,7 @@
             <li><a href="#home" class="nav-link active">Home</a></li>
             <li><a href="#local" class="nav-link">Hometown</a></li>
             <li><a href="#education" class="nav-link">Education</a></li>
-            <li><a href="#skills" class="nav-link">Achievemnets & Skills</a></li>
+            <li><a href="#skills" class="nav-link">Achievements & Skills</a></li>
             <li><a href="#analytics" class="nav-link">Text Analysis</a></li>
             <li><a href="#cv" class="nav-link">CV</a></li>
         </ul>
@@ -23,7 +23,7 @@
     <section id="home" class="active-section">
         <div class="hero">
             <div class="profile-container">
-                <img src="profile.jpg" alt="Devshree Vyas" class="profile-img">
+                <img src="profile.jpeg">
                 <div class="profile-glow"></div>
             </div>
             <div class="hero-text">
@@ -31,7 +31,7 @@
                 <p class="tagline">CSD Student at IIITH</p>
                 <p class="bio">I am currently a first year student pursuing B-Tech and MS
                     in Computer Science from International Institute of Information of Technology, Hyderabad.
-                    I am passionate about solving pzzles and sketching.
+                    I am passionate about solving puzzles and sketching.
                 </p>
               
             </div>
@@ -43,7 +43,7 @@
         <div class="section-intro">
             <p>Jamnagar is a peaceful blend of heritage and nature, known for its beautiful temples,
                 vibrant bandhani fabrics, and the serene vibes of the coastal breeze.
-                It’s where tradition meets progress, beautifully. </p>
+                It's where tradition meets progress, beautifully. </p>
         </div>
         <div class="gallery-grid">
             <div class="gallery-item">
@@ -204,12 +204,15 @@
         <h2>Text Analysis Tool</h2>
         <div class="section-intro">
             <p>This interactive tool provides detailed insights into your text. Just paste your content 
-               below and get instant linguistic analysis including word count, frequency patterns, and more.</p>
+               below (supports 10,000+ words) and get instant linguistic analysis including word count, frequency patterns, and more.</p>
         </div>
         <div class="analytics-container">
-            <textarea id="text-input" placeholder="Enter your text here for analysis..."></textarea>
+            <textarea id="text-input" placeholder="Enter your text here for analysis (supports 10,000+ words)..."></textarea>
             <button onclick="analyzeText()">Analyze Text</button>
             <div id="results" class="results-grid"></div>
+        </div>
+        <div class="sample-data-container">
+            <button onclick="loadSampleText()">Load Sample Text (10,000+ words)</button>
         </div>
     </section>
 
