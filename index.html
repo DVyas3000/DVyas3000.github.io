@@ -23,7 +23,7 @@
     <section id="home" class="active-section">
         <div class="hero">
             <div class="profile-container">
-                <img src="profile.jpeg">
+                <img src="profile.jpg">
                 <div class="profile-glow"></div>
             </div>
             <div class="hero-text">
@@ -203,16 +203,13 @@
     <section id="analytics">
         <h2>Text Analysis Tool</h2>
         <div class="section-intro">
-            <p>This interactive tool provides detailed insights into your text. Just paste your content 
-               below (supports 10,000+ words) and get instant linguistic analysis including word count, frequency patterns, and more.</p>
+            <p>This interactive tool provides detailed insights into your text, but will only analyze text with more than 10,000 words. 
+               Just paste your content below and get instant linguistic analysis including word count, frequency patterns, and more.</p>
         </div>
         <div class="analytics-container">
-            <textarea id="text-input" placeholder="Enter your text here for analysis (supports 10,000+ words)..."></textarea>
+            <textarea id="text-input" placeholder="Enter your text here for analysis (must be more than 10,000 words)..."></textarea>
             <button onclick="analyzeText()">Analyze Text</button>
             <div id="results" class="results-grid"></div>
-        </div>
-        <div class="sample-data-container">
-            <button onclick="loadSampleText()">Load Sample Text (10,000+ words)</button>
         </div>
     </section>
 

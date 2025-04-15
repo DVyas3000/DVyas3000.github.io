@@ -106,99 +106,117 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   
     // Enhanced text analysis
-    window.analyzeText = function() {
-      const input = document.getElementById("text-input").value;
-      const resultContainer = document.getElementById("results");
-      
-      // Show loading state
-      resultContainer.innerHTML = `
-        <div class="result-card">
-          <h3>Processing</h3>
-          <p>Analyzing ${input.length} characters of text...</p>
-        </div>
-      `;
-      
-      // Use setTimeout to avoid UI freezing with large text
-      setTimeout(() => {
-        // Basic counts
-        const letters = input.replace(/[^a-zA-Z]/g, '').length;
-        const words = input.split(/\s+/).filter(w => w).length;
-        const spaces = (input.match(/\s/g) || []).length;
-        const newlines = (input.match(/\n/g) || []).length;
-        const special = input.replace(/[\w\s]/g, '').length;
-        
-        // Word frequency analysis
-        const wordFrequency = {};
-        input.toLowerCase().match(/\b\w+\b/g)?.forEach(word => {
-          wordFrequency[word] = (wordFrequency[word] || 0) + 1;
-        });
-        
-        // Get top 10 most frequent words
-        const topWords = Object.entries(wordFrequency)
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 10);
-        
-        // Linguistic analysis
-        const pronouns = ['i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them'];
-        const prepositions = ['in', 'on', 'at', 'by', 'with', 'about', 'above', 'below', 'during', 'for'];
-        const articles = ['a', 'an', 'the'];
-        
-        const counts = {
-          pronouns: {},
-          prepositions: {},
-          articles: {}
-        };
-        
-        input.toLowerCase().split(/\s+/).forEach(word => {
-          word = word.replace(/[^a-z]/g, '');
-          if (pronouns.includes(word)) counts.pronouns[word] = (counts.pronouns[word] || 0) + 1;
-          if (prepositions.includes(word)) counts.prepositions[word] = (counts.prepositions[word] || 0) + 1;
-          if (articles.includes(word)) counts.articles[word] = (counts.articles[word] || 0) + 1;
-        });
-        
-        // Average word length
-        const totalWordLength = input.match(/\b\w+\b/g)?.reduce((sum, word) => sum + word.length, 0) || 0;
-        const avgWordLength = words > 0 ? (totalWordLength / words).toFixed(2) : 0;
-        
-        // Display results with improved visual feedback
-        resultContainer.innerHTML = `
-          <div class="result-card">
-            <h3>Basic Statistics</h3>
-            <p>Letters: ${letters}</p>
-            <p>Words: ${words}</p>
-            <p>Spaces: ${spaces}</p>
-            <p>Newlines: ${newlines}</p>
-            <p>Special Characters: ${special}</p>
-            <p>Average Word Length: ${avgWordLength}</p>
-          </div>
-          <div class="result-card">
-            <h3>Top Words</h3>
-            ${topWords.map(([word, count]) => `
-              <p>${word}: ${count}</p>
-            `).join('')}
-          </div>
-          <div class="result-card">
-            <h3>Pronouns</h3>
-            ${Object.entries(counts.pronouns).map(([word, count]) => `
-              <p>${word}: ${count}</p>
-            `).join('')}
-          </div>
-          <div class="result-card">
-            <h3>Prepositions</h3>
-            ${Object.entries(counts.prepositions).map(([word, count]) => `
-              <p>${word}: ${count}</p>
-            `).join('')}
-          </div>
-        `;
-        
-        // Add animation class to results
-        document.querySelectorAll('.result-card').forEach((card, index) => {
-          card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.1}s`;
-          card.style.opacity = '0';
-        });
-        
-      }, 100); // Short delay to allow UI to update
-    }
+// Enhanced text analysis with minimum word count check
+// Enhanced text analysis with minimum word count check
+window.analyzeText = function() {
+  const input = document.getElementById("text-input").value;
+  const resultContainer = document.getElementById("results");
+  
+  // Count words first
+  const wordCount = input.split(/\s+/).filter(w => w).length;
+  
+  // Check if word count is less than 10,000
+  if (wordCount < 10000) {
+    resultContainer.innerHTML = `
+      <div class="result-card">
+        <h3>Minimum Word Count Not Met</h3>
+        <p>This text contains only ${wordCount} words. Analysis requires at least 10,000 words.</p>
+        <p>Please add more content or use the "Load Sample Text" button.</p>
+      </div>
+    `;
+    return; // Exit the function
+  }
+  
+  // Show loading state
+  resultContainer.innerHTML = `
+    <div class="result-card">
+      <h3>Processing</h3>
+      <p>Analyzing ${input.length} characters of text...</p>
+    </div>
+  `;
+  
+  // Use setTimeout to avoid UI freezing with large text
+  setTimeout(() => {
+    // Basic counts
+    const letters = input.replace(/[^a-zA-Z]/g, '').length;
+    const words = wordCount; // We already calculated this
+    const spaces = (input.match(/\s/g) || []).length;
+    const newlines = (input.match(/\n/g) || []).length;
+    const special = input.replace(/[\w\s]/g, '').length;
+    
+    // Word frequency analysis
+    const wordFrequency = {};
+    input.toLowerCase().match(/\b\w+\b/g)?.forEach(word => {
+      wordFrequency[word] = (wordFrequency[word] || 0) + 1;
+    });
+    
+    // Get top 10 most frequent words
+    const topWords = Object.entries(wordFrequency)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
+    
+    // Linguistic analysis
+    const pronouns = ['i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them'];
+    const prepositions = ['in', 'on', 'at', 'by', 'with', 'about', 'above', 'below', 'during', 'for'];
+    const articles = ['a', 'an', 'the'];
+    
+    const counts = {
+      pronouns: {},
+      prepositions: {},
+      articles: {}
+    };
+    
+    input.toLowerCase().split(/\s+/).forEach(word => {
+      word = word.replace(/[^a-z]/g, '');
+      if (pronouns.includes(word)) counts.pronouns[word] = (counts.pronouns[word] || 0) + 1;
+      if (prepositions.includes(word)) counts.prepositions[word] = (counts.prepositions[word] || 0) + 1;
+      if (articles.includes(word)) counts.articles[word] = (counts.articles[word] || 0) + 1;
+    });
+    
+    // Average word length
+    const totalWordLength = input.match(/\b\w+\b/g)?.reduce((sum, word) => sum + word.length, 0) || 0;
+    const avgWordLength = words > 0 ? (totalWordLength / words).toFixed(2) : 0;
+    
+    // Display results with improved visual feedback
+    resultContainer.innerHTML = `
+      <div class="result-card">
+        <h3>Basic Statistics</h3>
+        <p>Letters: ${letters}</p>
+        <p>Words: ${words}</p>
+        <p>Spaces: ${spaces}</p>
+        <p>Newlines: ${newlines}</p>
+        <p>Special Characters: ${special}</p>
+        <p>Average Word Length: ${avgWordLength}</p>
+      </div>
+      <div class="result-card">
+        <h3>Top Words</h3>
+        ${topWords.map(([word, count]) => `
+          <p>${word}: ${count}</p>
+        `).join('')}
+      </div>
+      <div class="result-card">
+        <h3>Pronouns</h3>
+        ${Object.entries(counts.pronouns).map(([word, count]) => `
+          <p>${word}: ${count}</p>
+        `).join('')}
+      </div>
+      <div class="result-card">
+        <h3>Prepositions</h3>
+        ${Object.entries(counts.prepositions).map(([word, count]) => `
+          <p>${word}: ${count}</p>
+        `).join('')}
+      </div>
+    `;
+    
+    // Add animation class to results
+    document.querySelectorAll('.result-card').forEach((card, index) => {
+      card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.1}s`;
+      card.style.opacity = '0';
+    });
+    
+  }, 100); // Short delay to allow UI to update
+}
+
   // Theme toggle with improved animation
   const themeToggle = document.getElementById("theme-toggle");
   const root = document.documentElement;
