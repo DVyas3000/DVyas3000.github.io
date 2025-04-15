@@ -150,11 +150,6 @@ window.analyzeText = function() {
       wordFrequency[word] = (wordFrequency[word] || 0) + 1;
     });
     
-    // Get top 10 most frequent words
-    const topWords = Object.entries(wordFrequency)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 10);
-    
     // Linguistic analysis
     const pronouns = ['i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them'];
     const prepositions = ['in', 'on', 'at', 'by', 'with', 'about', 'above', 'below', 'during', 'for'];
@@ -175,7 +170,6 @@ window.analyzeText = function() {
     
     // Average word length
     const totalWordLength = input.match(/\b\w+\b/g)?.reduce((sum, word) => sum + word.length, 0) || 0;
-    const avgWordLength = words > 0 ? (totalWordLength / words).toFixed(2) : 0;
     
     // Display results with improved visual feedback
     resultContainer.innerHTML = `
@@ -186,11 +180,10 @@ window.analyzeText = function() {
         <p>Spaces: ${spaces}</p>
         <p>Newlines: ${newlines}</p>
         <p>Special Characters: ${special}</p>
-        <p>Average Word Length: ${avgWordLength}</p>
       </div>
       <div class="result-card">
-        <h3>Top Words</h3>
-        ${topWords.map(([word, count]) => `
+        <h3>Indefinite Articles</h3>
+        ${Object.entries(counts.articles).map(([word, count]) => `
           <p>${word}: ${count}</p>
         `).join('')}
       </div>
