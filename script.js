@@ -121,7 +121,7 @@ if (wordCount < 10000) {
     <div class="result-card">
       <h3>Minimum Word Count Not Met</h3>
       <p>This text contains only ${wordCount} words. Analysis requires at least 10,000 words.</p>
-      <p>Please add more content or use the "Load Sample Text" button.</p>
+      <p>Please add more content.</p>
     </div>
   `;
   return; // Exit the function
